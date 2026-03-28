@@ -1,0 +1,922 @@
+repeat task.wait() until game:IsLoaded()
+
+local TweenService = game:GetService("TweenService")
+local P_Serv = game:GetService("Players")
+local LP = P_Serv.LocalPlayer or P_Serv:GetPropertyChangedSignal("LocalPlayer"):Wait()
+
+local SafeGui
+pcall(function() if type(gethui) == "function" then SafeGui = gethui() end end)
+if not SafeGui then pcall(function() SafeGui = game:GetService("CoreGui") end) end
+if not SafeGui then SafeGui = LP:WaitForChild("PlayerGui") end
+
+local LoadGui = Instance.new("ScreenGui")
+LoadGui.Name = "LoadingUI_" .. tostring(math.random(1000,9999))
+LoadGui.ResetOnSpawn = false
+LoadGui.Parent = SafeGui
+
+local LoadFrame = Instance.new("Frame")
+LoadFrame.Size = UDim2.new(0, 280, 0, 140)
+LoadFrame.Position = UDim2.new(0.5, -140, 0.5, -70)
+LoadFrame.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+LoadFrame.BorderSizePixel = 0
+LoadFrame.Parent = LoadGui
+Instance.new("UICorner", LoadFrame).CornerRadius = UDim.new(0, 10)
+local ls = Instance.new("UIStroke", LoadFrame)
+ls.Thickness = 1.5
+ls.Color = Color3.fromRGB(0, 200, 100)
+
+local WelcomeLabel = Instance.new("TextLabel")
+WelcomeLabel.Size = UDim2.new(1, 0, 0, 20)
+WelcomeLabel.Position = UDim2.new(0, 0, 0, 10)
+WelcomeLabel.BackgroundTransparency = 1
+WelcomeLabel.Text = "👋 Xin chào, " .. LP.Name .. "!"
+WelcomeLabel.TextColor3 = Color3.fromRGB(0, 150, 50)
+WelcomeLabel.Font = Enum.Font.GothamBold
+WelcomeLabel.TextSize = 13
+WelcomeLabel.Parent = LoadFrame
+
+local LoadTitle = Instance.new("TextLabel")
+LoadTitle.Size = UDim2.new(1, 0, 0, 24)
+LoadTitle.Position = UDim2.new(0, 0, 0, 32)
+LoadTitle.BackgroundTransparency = 1
+LoadTitle.Text = "Đứng Trên Tất Cả"
+LoadTitle.TextColor3 = Color3.fromRGB(0, 200, 100)
+LoadTitle.Font = Enum.Font.GothamBold
+LoadTitle.TextSize = 15
+LoadTitle.Parent = LoadFrame
+
+local SubLabel = Instance.new("TextLabel")
+SubLabel.Size = UDim2.new(1, 0, 0, 18)
+SubLabel.Position = UDim2.new(0, 0, 0, 58)
+SubLabel.BackgroundTransparency = 1
+SubLabel.Text = "discord.gg/bFfNwzueg"
+SubLabel.TextColor3 = Color3.fromRGB(0, 180, 80)
+SubLabel.Font = Enum.Font.Gotham
+SubLabel.TextSize = 12
+SubLabel.Parent = LoadFrame
+
+local ProgressBg = Instance.new("Frame")
+ProgressBg.Size = UDim2.new(0.82, 0, 0, 8)
+ProgressBg.Position = UDim2.new(0.09, 0, 0, 88)
+ProgressBg.BackgroundColor3 = Color3.fromRGB(230, 230, 230)
+ProgressBg.BorderSizePixel = 0
+ProgressBg.Parent = LoadFrame
+Instance.new("UICorner", ProgressBg).CornerRadius = UDim.new(0, 4)
+
+local ProgressBar = Instance.new("Frame")
+ProgressBar.Size = UDim2.new(0, 0, 1, 0)
+ProgressBar.BackgroundColor3 = Color3.fromRGB(0, 200, 100)
+ProgressBar.BorderSizePixel = 0
+ProgressBar.Parent = ProgressBg
+Instance.new("UICorner", ProgressBar).CornerRadius = UDim.new(0, 4)
+
+local StatusLabel = Instance.new("TextLabel")
+StatusLabel.Size = UDim2.new(1, 0, 0, 18)
+StatusLabel.Position = UDim2.new(0, 0, 0, 110)
+StatusLabel.BackgroundTransparency = 1
+StatusLabel.Text = "Loading..."
+StatusLabel.TextColor3 = Color3.fromRGB(100, 150, 100)
+StatusLabel.Font = Enum.Font.Gotham
+StatusLabel.TextSize = 11
+StatusLabel.Parent = LoadFrame
+
+local tweenInfo = TweenInfo.new(3, Enum.EasingStyle.Quart, Enum.EasingDirection.Out)
+local tween = TweenService:Create(ProgressBar, tweenInfo, {Size = UDim2.new(1, 0, 1, 0)})
+tween:Play()
+tween.Completed:Wait()
+
+StatusLabel.Text = "✅ Loaded!"
+StatusLabel.TextColor3 = Color3.fromRGB(0, 200, 100)
+pcall(function() setclipboard("https://discord.gg/bFfNwzueg") end)
+SubLabel.Text = "✅ Đã sao chép Server Discord!"
+SubLabel.TextColor3 = Color3.fromRGB(0, 200, 100)
+task.wait(0.2)
+
+LoadGui:Destroy()
+task.spawn(function()
+    local PopGui = Instance.new("ScreenGui")
+    PopGui.Name = "WelcomePopup_" .. tostring(math.random(1000,9999))
+    PopGui.ResetOnSpawn = false
+    PopGui.Parent = SafeGui
+
+    local Pop = Instance.new("Frame")
+    Pop.Size = UDim2.new(0, 340, 0, 62)
+    Pop.Position = UDim2.new(0.5, -170, 0, -70)
+    Pop.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    Pop.BackgroundTransparency = 1
+    Pop.BorderSizePixel = 0
+    Pop.Parent = PopGui
+    Instance.new("UICorner", Pop).CornerRadius = UDim.new(0, 8)
+    local ps = Instance.new("UIStroke", Pop)
+  
+    ps.Thickness = 2; ps.Color = Color3.fromRGB(0, 200, 100)
+
+    local PopText = Instance.new("TextLabel")
+    PopText.Size = UDim2.new(1, 0, 0.52, 0)
+    PopText.Position = UDim2.new(0, 0, 0.04, 0)
+    PopText.BackgroundTransparency = 1
+    PopText.Text = "👋 Chào mừng, " .. LP.Name .. "!"
+    PopText.TextColor3 = Color3.fromRGB(0, 200, 100)
+    PopText.Font = Enum.Font.GothamBold
+    PopText.TextSize = 15
+    PopText.TextTransparency = 1
+    PopText.Parent = Pop
+
+    local PopSub = Instance.new("TextLabel")
+    PopSub.Size = UDim2.new(1, 0, 0.38, 0)
+    PopSub.Position = UDim2.new(0, 0, 0.58, 0)
+    PopSub.BackgroundTransparency = 1
+    PopSub.Text = "✅ Đứng Trên Tất Cả đã sẵn sàng!"
+    PopSub.TextColor3 = Color3.fromRGB(0, 200, 100)
+    PopSub.Font = Enum.Font.GothamBold
+    PopSub.TextSize = 12
+    PopSub.TextTransparency = 1
+    PopSub.Parent = Pop
+
+    TweenService:Create(Pop, TweenInfo.new(0.4, Enum.EasingStyle.Back, Enum.EasingDirection.Out), {
+        Position = UDim2.new(0.5, -170, 0, -55),
+        BackgroundTransparency = 0
+    }):Play()
+   
+ 
+    TweenService:Create(PopText, TweenInfo.new(0.4), {TextTransparency = 0}):Play()
+    TweenService:Create(PopSub, TweenInfo.new(0.4), {TextTransparency = 0}):Play()
+
+    task.wait(2.5)
+
+    TweenService:Create(Pop, TweenInfo.new(0.3, Enum.EasingStyle.Quart, Enum.EasingDirection.In), {
+        Position = UDim2.new(0.5, -170, 0, -70),
+        BackgroundTransparency = 1
+    }):Play()
+    TweenService:Create(PopText, TweenInfo.new(0.3), {TextTransparency = 1}):Play()
+    TweenService:Create(PopSub, TweenInfo.new(0.3), {TextTransparency = 1}):Play()
+    task.wait(0.35)
+    PopGui:Destroy()
+end)
+
+local S = {
+    P = game:GetService("Players"), W = game:GetService("Workspace"),
+    RS = game:GetService("RunService"), V = game:GetService("VirtualInputManager"),
+ 
+    L = game:GetService("Lighting"), ST = game:GetService("Stats"),
+    GS = game:GetService("GuiService"), TS = game:GetService("TeleportService"),
+    HTTP = game:GetService("HttpService"), CG = game:GetService("CoreGui")
+}
+
+local t_wait, t_spawn = task.wait, task.spawn
+local m_random, m_floor = math.random, math.floor
+local v3_new, cf_new = Vector3.new, CFrame.new
+
+getgenv().Setting = getgenv().Setting or {
+    Hitbox = { Enabled = true, Size = 200, Transparency = 0.7 },
+    DeleteMap = false,
+    AntiSusKill = false,
+    DodgeSkill = true
+}
+
+getgenv().LockedTarget = nil
+getgenv().Retreating = false
+getgenv().RetreatTracker = getgenv().RetreatTracker or {}
+getgenv().LastTargetName = nil
+local Blacklist = {}
+local bLabel = nil
+local lastUISearch = 0
+local IsWaitingSus = false
+
+local function getRealBounty()
+    local ls = LP:FindFirstChild("leaderstats")
+    if ls then
+        local b = ls:FindFirstChild("Bounty/Honor") or ls:FindFirstChild("Bounty")
+        if b then 
+            local val = tostring(b.Value):upper()
+            val = val:gsub(",", ""):gsub("%$", "")
+            if val:match("M") then
+                return (tonumber(val:gsub("M", "")) or 0) * 1000000
+            elseif val:match("K") then
+                return (tonumber(val:gsub("K", "")) or 0) * 1000
+            end
+            return tonumber(val) or 0
+        end
+    end
+    return 0
+end
+
+local EarnedFileName = "Earned_" .. LP.UserId .. ".txt"
+local function SaveEarned(val) pcall(function() if writefile then writefile(EarnedFileName, tostring(val)) end end) end
+local function LoadEarned()
+    local val = 0
+    pcall(function() if isfile and readfile and isfile(EarnedFileName) then val = tonumber(readfile(EarnedFileName)) or 0 end end)
+    return val
+end
+
+local KillFileName = "Kills_" .. LP.UserId .. ".txt"
+local function SaveKills(val) pcall(function() if writefile then writefile(KillFileName, tostring(val)) end end) end
+local function LoadKills()
+    local val = 0
+    pcall(function() if isfile and readfile and isfile(KillFileName) then val = tonumber(readfile(KillFileName)) or 0 end end)
+    return val
+end
+
+local TimeFileName = "Time_" .. LP.UserId .. ".txt"
+local function SaveTime(val) pcall(function() if writefile then writefile(TimeFileName, tostring(val)) end end) end
+local function LoadTime()
+    local val = 0
+    pcall(function() if isfile and readfile and isfile(TimeFileName) then val = tonumber(readfile(TimeFileName)) or 0 end end)
+    return val
+end
+
+local TotalEarned = LoadEarned() 
+local LastBounty = -1
+local TotalKills = LoadKills()
+local SavedTime = LoadTime()
+local StartTime = tick()
+local CurrentFPS = 0
+local FrameCount = 0
+local LastFPSTick = tick()
+local trackedHums = setmetatable({}, {__mode = "k"})
+
+local ScreenGui = Instance.new("ScreenGui")
+local MainFrame = Instance.new("Frame")
+local UIStroke = Instance.new("UIStroke")
+local UICorner = Instance.new("UICorner")
+local Title = Instance.new("TextLabel")
+
+local AvatarImage = Instance.new("ImageLabel")
+local AvatarCorner = Instance.new("UICorner")
+local NameLabel = Instance.new("TextLabel")
+
+local TotalLabel = Instance.new("TextLabel")
+local EarnLabel = Instance.new("TextLabel")
+local KillsLabel = Instance.new("TextLabel") 
+local TimeLabel = Instance.new("TextLabel")
+local WeaponLabel = Instance.new("TextLabel")
+local RaceLabel = Instance.new("TextLabel")
+local FactionLabel = Instance.new("TextLabel")
+local StatLabel = Instance.new("TextLabel")
+local ResetBtn = Instance.new("TextButton")
+local ResetCorner = Instance.new("UICorner")
+local DiscordBtn = Instance.new("TextButton")
+local DiscordCorner = Instance.new("UICorner")
+
+local ToggleBtn = Instance.new("TextButton")
+local ToggleCorner = Instance.new("UICorner")
+local ToggleStroke = Instance.new("UIStroke")
+
+ScreenGui.Name = "ProUI_" .. tostring(math.random(1000,9999))
+ScreenGui.ResetOnSpawn = false
+ScreenGui.Parent = SafeGui
+
+MainFrame.Parent = ScreenGui
+MainFrame.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+MainFrame.AnchorPoint = Vector2.new(0.5, 0.5)
+MainFrame.Position = UDim2.new(0.5, 0, 0.5, 0)
+MainFrame.Size = UDim2.new(0, 480, 0, 140) 
+MainFrame.Active = true
+MainFrame.Draggable = true 
+
+UICorner.CornerRadius = UDim.new(0, 8)
+UICorner.Parent = MainFrame
+UIStroke.Parent = MainFrame
+UIStroke.Thickness = 2
+UIStroke.Color = Color3.fromRGB(0, 200, 100)
+UIStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+
+AvatarImage.Parent = MainFrame
+AvatarImage.Size = UDim2.new(0, 40, 0, 40)
+AvatarImage.Position = UDim2.new(0, 15, 0, 35)
+AvatarImage.BackgroundTransparency = 1
+AvatarImage.Image = game:GetService("Players"):GetUserThumbnailAsync(LP.UserId, Enum.ThumbnailType.HeadShot, Enum.ThumbnailSize.Size420x420)
+AvatarCorner.CornerRadius = UDim.new(1, 0)
+AvatarCorner.Parent = AvatarImage
+
+NameLabel.Parent = MainFrame
+NameLabel.Size = UDim2.new(0, 100, 0, 20)
+NameLabel.Position = UDim2.new(0, 60, 0, 45)
+NameLabel.BackgroundTransparency = 1
+NameLabel.Font = Enum.Font.GothamBold
+NameLabel.TextColor3 = Color3.fromRGB(0, 150, 50)
+NameLabel.TextSize = 13
+NameLabel.TextXAlignment = Enum.TextXAlignment.Left
+NameLabel.Text = LP.DisplayName
+
+local BountyProgressBg = Instance.new("Frame")
+BountyProgressBg.Parent = MainFrame
+BountyProgressBg.Size = UDim2.new(0, 135, 0, 16)
+BountyProgressBg.Position = UDim2.new(0, 15, 0, 85)
+BountyProgressBg.BackgroundColor3 = Color3.fromRGB(230, 240, 230)
+BountyProgressBg.BorderSizePixel = 0
+Instance.new("UICorner", BountyProgressBg).CornerRadius = UDim.new(0, 6)
+
+local BountyProgressBar = Instance.new("Frame")
+BountyProgressBar.Parent = BountyProgressBg
+BountyProgressBar.Size = UDim2.new(0, 0, 1, 0)
+BountyProgressBar.BackgroundColor3 = Color3.fromRGB(0, 200, 100)
+BountyProgressBar.BorderSizePixel = 0
+Instance.new("UICorner", BountyProgressBar).CornerRadius = UDim.new(0, 6)
+
+local BountyProgressText = Instance.new("TextLabel")
+BountyProgressText.Parent = BountyProgressBg
+BountyProgressText.Size = UDim2.new(1, 0, 1, 0)
+BountyProgressText.BackgroundTransparency = 1
+BountyProgressText.Font = Enum.Font.GothamBold
+BountyProgressText.TextSize = 10
+BountyProgressText.TextColor3 = Color3.fromRGB(50, 50, 50)
+BountyProgressText.Text = "0 / 30M (0%)"
+
+local function CreateLabel(obj, pos, size, color, text, textSize)
+    obj.Parent = MainFrame
+    obj.BackgroundTransparency = 1
+    obj.Position = pos
+    obj.Size = size
+    obj.Font = Enum.Font.GothamBold
+    obj.TextColor3 = color
+    obj.TextSize = textSize or 12
+    obj.Text = text
+    obj.TextXAlignment = Enum.TextXAlignment.Left
+end
+
+CreateLabel(Title, UDim2.new(0, 15, 0, 10), UDim2.new(0, 200, 0, 20), Color3.fromRGB(0, 200, 100), "👑 Đứng Trên Tất Cả by khánh", 14)
+
+CreateLabel(TotalLabel, UDim2.new(0, 170, 0, 35), UDim2.new(0, 140, 0, 20), Color3.fromRGB(0, 100, 50), "💰 TOTAL: --")
+CreateLabel(EarnLabel, UDim2.new(0, 170, 0, 55), UDim2.new(0, 140, 0, 20), Color3.fromRGB(0, 180, 80), "💵 EARNED: 0")
+CreateLabel(KillsLabel, UDim2.new(0, 170, 0, 75), UDim2.new(0, 140, 0, 20), Color3.fromRGB(0, 120, 60), "⚔️ KILLS: " .. tostring(TotalKills)) 
+CreateLabel(TimeLabel, UDim2.new(0, 170, 0, 95), UDim2.new(0, 140, 0, 20), Color3.fromRGB(0, 140, 70), "⏳ TIME: 00:00:00")
+
+CreateLabel(WeaponLabel, UDim2.new(0, 310, 0, 35), UDim2.new(0, 160, 0, 20), Color3.fromRGB(0, 160, 80), "🗡️ WEAPON: None")
+CreateLabel(RaceLabel, UDim2.new(0, 310, 0, 55), UDim2.new(0, 160, 0, 20), Color3.fromRGB(0, 180, 90), "🧬 RACE: --")
+CreateLabel(FactionLabel, UDim2.new(0, 310, 0, 75), UDim2.new(0, 160, 0, 20), Color3.fromRGB(0, 200, 100), "🏴‍☠️ FACTION: --")
+
+CreateLabel(StatLabel, UDim2.new(0, 15, 1, -10), UDim2.new(0, 200, 0, 20), Color3.fromRGB(50, 150, 50), "⚡ FPS: -- |📶 PING: --", 11)
+StatLabel.AnchorPoint = Vector2.new(0, 1)
+
+ResetBtn.Parent = MainFrame
+ResetBtn.Size = UDim2.new(0, 90, 0, 25)
+ResetBtn.AnchorPoint = Vector2.new(1, 1)
+ResetBtn.Position = UDim2.new(1, -10, 1, -10)
+ResetBtn.BackgroundColor3 = Color3.fromRGB(0, 200, 100)
+ResetBtn.Text = "Reset"
+ResetBtn.TextColor3 = Color3.new(1,1,1)
+ResetBtn.Font = Enum.Font.GothamBold
+ResetBtn.TextSize = 11
+ResetCorner.CornerRadius = UDim.new(0, 6)
+ResetCorner.Parent = ResetBtn
+
+DiscordBtn.Parent = MainFrame
+DiscordBtn.Size = UDim2.new(0, 90, 0, 25)
+DiscordBtn.AnchorPoint = Vector2.new(1, 1)
+DiscordBtn.Position = UDim2.new(1, -110, 1, -10)
+DiscordBtn.BackgroundColor3 = Color3.fromRGB(0, 150, 50)
+DiscordBtn.Text = "Discord"
+DiscordBtn.TextColor3 = Color3.new(1, 1, 1)
+DiscordBtn.Font = Enum.Font.GothamBold
+DiscordBtn.TextSize = 11
+DiscordCorner.CornerRadius = UDim.new(0, 6)
+DiscordCorner.Parent = DiscordBtn
+
+DiscordBtn.MouseButton1Click:Connect(function()
+    pcall(function() setclipboard("https://discord.gg/bFfNwzueg") end)
+    local oldText = DiscordBtn.Text
+    local oldColor = DiscordBtn.BackgroundColor3
+    DiscordBtn.Text = "Copied!"
+    DiscordBtn.BackgroundColor3 = Color3.fromRGB(0, 200, 100)
+    task.wait(1.5)
+    DiscordBtn.Text = oldText
+    DiscordBtn.BackgroundColor3 = oldColor
+end)
+
+ToggleBtn.Parent = ScreenGui
+ToggleBtn.Size = UDim2.new(0, 35, 0, 35)
+ToggleBtn.Position = UDim2.new(0.05, 0, 0.95, -160)
+ToggleBtn.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+ToggleBtn.Text = "KHÁNH"
+ToggleBtn.TextColor3 = Color3.fromRGB(0, 200, 100)
+ToggleBtn.Font = Enum.Font.GothamBold
+ToggleBtn.TextSize = 12
+ToggleBtn.Active = true
+ToggleBtn.Draggable = true
+
+ToggleCorner.CornerRadius = UDim.new(0, 8)
+ToggleCorner.Parent = ToggleBtn
+
+ToggleStroke.Parent = ToggleBtn
+ToggleStroke.Thickness = 2
+ToggleStroke.Color = Color3.fromRGB(0, 200, 100)
+ToggleStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+
+ToggleBtn.MouseButton1Click:Connect(function()
+    MainFrame.Visible = not MainFrame.Visible
+end)
+
+local function formatNumber(n)
+    local formatted = tostring(math.floor(math.abs(n)))
+    local k
+    while true do
+        formatted, k = string.gsub(formatted, "^(-?%d+)(%d%d%d)", '%1,%2')
+        if (k==0) then break end
+    end
+    return (n < 0 and "-" or "") .. formatted
+end
+
+local function formatTime(seconds)
+    local h = math.floor(seconds / 3600)
+    local m = math.floor((seconds % 3600) / 60)
+    local s = math.floor(seconds % 60)
+    return string.format("%02d:%02d:%02d", h, m, s)
+end
+
+ResetBtn.MouseButton1Click:Connect(function()
+    TotalEarned = 0
+    LastBounty = getRealBounty()
+    SaveEarned(TotalEarned)
+    TotalKills = 0
+    SaveKills(TotalKills)
+    SavedTime = 0
+    SaveTime(0)
+    StartTime = tick()
+    EarnLabel.Text = "💵 EARNED: 0"
+    KillsLabel.Text = "⚔️ KILLS: 0"
+    TimeLabel.Text = "⏳ TIME: 00:00:00"
+end)
+
+S.RS.RenderStepped:Connect(function()
+    FrameCount = FrameCount + 1
+    local now = tick()
+    if now - LastFPSTick >= 1 then
+        CurrentFPS = FrameCount
+        FrameCount = 0
+        LastFPSTick = now
+    end
+end)
+
+t_spawn(function()
+    while t_wait(0.5) do
+        pcall(function()
+            local current = getRealBounty()
+            if current > 0 then
+                if LastBounty == -1 then LastBounty = current end
+                if LastBounty ~= -1 and current < 30000000 then
+                    local diff = current - LastBounty
+                    if diff > 0 and diff < 50000 then
+                        TotalEarned = TotalEarned + diff
+                        SaveEarned(TotalEarned)
+                    end
+                end
+                LastBounty = current
+            end
+            
+            local displayBounty = (current > 0) and current or (LastBounty ~= -1 and LastBounty or 0)
+  
+            TotalLabel.Text = "💰 TOTAL: " .. formatNumber(displayBounty)
+            EarnLabel.Text = "💵 EARNED: " .. (TotalEarned > 0 and "+" or "") .. formatNumber(TotalEarned)
+            
+            local maxBounty = 30000000
+            local percent = math.clamp(displayBounty / maxBounty, 0, 1)
+            BountyProgressBar.Size = UDim2.new(percent, 0, 1, 0)
+            local shortBounty = displayBounty >= 1000000 and string.format("%.1fM", displayBounty / 1000000) or formatNumber(displayBounty)
+            BountyProgressText.Text = shortBounty .. " / 30M (" .. math.floor(percent * 100) .. "%)"
+            
+            local currentSessionTime = tick() - StartTime
+            local totalElapsedTime = SavedTime + currentSessionTime
+            TimeLabel.Text = "⏳ TIME: " .. formatTime(totalElapsedTime)
+            SaveTime(totalElapsedTime)
+            
+            local ping = 0
+            pcall(function()
+                local stats = game:GetService("Stats")
+                local network = stats:FindFirstChild("Network")
+                if network and network:FindFirstChild("ServerStatsItem") and network.ServerStatsItem:FindFirstChild("Data Ping") then
+                    ping = m_floor(network.ServerStatsItem["Data Ping"]:GetValue())
+                else
+                    ping = m_floor(LP:GetNetworkPing() * 1000)
+                end
+            end)
+            StatLabel.Text = string.format("⚡ FPS: %d |📶 PING: %d ms", CurrentFPS, ping)
+
+            local tool = LP.Character and LP.Character:FindFirstChildOfClass("Tool")
+            WeaponLabel.Text = "🗡️ WEAPON: " .. (tool and tool.Name or "None")
+
+            local race = "--"
+            if LP:FindFirstChild("Data") and LP.Data:FindFirstChild("Race") then
+                race = LP.Data.Race.Value
+            end
+            RaceLabel.Text = "🧬 RACE: " .. tostring(race)
+
+            local faction = "--"
+            if LP.Team then
+                faction = LP.Team.Name
+            end
+            FactionLabel.Text = "🏴‍☠️ FACTION: " .. tostring(faction)
+        end)
+    end
+end)
+
+t_spawn(function()
+    S.RS.RenderStepped:Connect(function()
+        pcall(function()
+            if LP.Character and LP.Character:FindFirstChild("Humanoid") then
+                LP.Character.Humanoid:Move(Vector3.new(0, 0, -1), true)
+            end
+        end)
+    end)
+end)
+
+t_spawn(function()
+    pcall(function()
+        LP:WaitForChild("PlayerGui").DescendantAdded:Connect(function(obj)
+            if obj:IsA("TextLabel") or obj:IsA("TextButton") then
+                task.delay(0.2, function()
+                    local current = getRealBounty()
+                    if current >= 30000000 then
+                        local txtLower = string.lower(obj.Text or "")
+                        if (string.find(txtLower, "bounty") or string.find(txtLower, "honor")) and string.find(obj.Text, "%+") then
+                            local numStr = string.match(obj.Text:gsub(",", ""), "%d+")
+                            if numStr then
+                                local val = tonumber(numStr)
+                                if val and val > 0 and val < 50000 then
+                                    TotalEarned = TotalEarned + val
+                                    SaveEarned(TotalEarned)
+                                end
+                            end
+                        end
+                    end
+                end)
+            end
+        end)
+    end)
+end)
+
+pcall(function()
+    local oldNamecall
+    oldNamecall = hookmetamethod(game, "__namecall", function(self, ...)
+        local method = getnamecallmethod()
+        if method == "Kick" or method == "kick" then return end
+        return oldNamecall(self, ...)
+    end)
+end)
+
+t_spawn(function()
+    pcall(function()
+        S.GS.ErrorMessageChanged:Connect(function()
+            t_wait(2)
+            S.TS:TeleportToPlaceInstance(game.PlaceId, game.JobId, LP)
+        end)
+    end)
+end)
+
+local function applyAllSmoothGraphics(v)
+    if v:IsA("BasePart") then
+        v.Material = Enum.Material.SmoothPlastic
+        v.Reflectance = 0
+        v.CastShadow = false
+        for _, descendant in ipairs(v:GetDescendants()) do
+            if descendant:IsA("Decal") or descendant:IsA("Texture") then
+                descendant.Transparency = 1 
+            end
+        end
+    elseif v:IsA("Decal") or v:IsA("Texture") then
+        v.Transparency = 1 
+    elseif v:IsA("ParticleEmitter") or v:IsA("Trail") then
+        v.Lifetime = NumberRange.new(0) 
+    elseif v:IsA("Fire") or v:IsA("SpotLight") or v:IsA("Smoke") or v:IsA("Sparkles") then
+        v.Enabled = false 
+    elseif v:IsA("PostEffect") or v:IsA("BlurEffect") or v:IsA("BloomEffect") or v:IsA("ColorCorrectionEffect") or v:IsA("SunRaysEffect") or v:IsA("DepthOfFieldEffect") or v:IsA("Atmosphere") or v:IsA("Fog") then
+        v.Enabled = false 
+        pcall(function() v:Destroy() end)
+    elseif v:IsA("Explosion") then
+        v.BlastPressure = 1
+        v.BlastRadius = 1
+    end
+end
+
+t_spawn(function()
+    pcall(function()
+        settings().Rendering.QualityLevel = Enum.QualityLevel.Level01 
+        S.L.GlobalShadows = false
+        S.L.FogEnd = 9e9
+        S.L.FogStart = 9e9
+        S.L.Brightness = 2 
+        pcall(function() S.L.Atmosphere:Destroy() end)
+
+        local Terrain = S.W:FindFirstChildOfClass("Terrain")
+        if Terrain then
+            Terrain.WaterWaveSize = 0
+            Terrain.WaterWaveSpeed = 0
+            Terrain.WaterReflectance = 0
+            Terrain.WaterTransparency = 0
+        end
+
+        for _, v in ipairs(S.W:GetDescendants()) do pcall(applyAllSmoothGraphics, v) end
+        for _, v in ipairs(S.L:GetDescendants()) do pcall(applyAllSmoothGraphics, v) end
+ 
+        S.W.DescendantAdded:Connect(function(v) pcall(applyAllSmoothGraphics, v) end)
+    end)
+end)
+
+local function SyncBananaTarget()
+    if bLabel and bLabel.Parent and bLabel.Text then
+        local n = string.match(bLabel.Text, "Target %([%s]*([%w_]+)")
+        if n then local p = S.P:FindFirstChild(n)
+            return p and p.Character or nil 
+        end
+        return nil
+    end
+    if tick() - lastUISearch > 0.2 then
+        lastUISearch = tick()
+        for _, v in ipairs(S.CG:GetDescendants()) do 
+            if v:IsA("TextLabel") and v.Text and string.find(v.Text, "Target %(") then bLabel = v;
+                break end 
+        end
+        if not bLabel then
+            local pGui = LP:FindFirstChild("PlayerGui")
+            if pGui then
+                for _, v in ipairs(pGui:GetDescendants()) do 
+                    if v:IsA("TextLabel") and v.Text and string.find(v.Text, "Target %(") then bLabel = v; break end 
+                end
+            end
+        end
+    end
+    return nil
+end
+
+local function SmartEquipFruit()
+    if not LP.Character then return nil end
+    local tip = "Blox Fruit"
+    for _, v in ipairs(LP.Backpack:GetChildren()) do 
+        if v:IsA("Tool") and (v.ToolTip == tip or v.Name:match(tip)) then return v end 
+    end
+    for _, v in ipairs(LP.Character:GetChildren()) do 
+        if v:IsA("Tool") and (v.ToolTip == tip or v.Name:match(tip)) then return v end 
+    end
+    return nil
+end
+
+t_spawn(function()
+    local tmr, last = {}, tick()
+    while t_wait(0.1) do
+        local now, dt = tick(), tick() - last
+        last = now
+        pcall(function()
+            local hp = LP.Character and LP.Character:FindFirstChild("Humanoid") and LP.Character.Humanoid.Health or 0
+            local t = SyncBananaTarget()
+            
+            if t then getgenv().LastTargetName = t.Name end
+
+            if t and t:FindFirstChild("Humanoid") and getgenv().Setting.AntiSusKill then
+                local eHum = t.Humanoid
+                if eHum.Health > 0 and eHum.Health <= (eHum.MaxHealth * 0.15) and not IsWaitingSus then
+                    IsWaitingSus = true
+                    if LP.Character and LP.Character:FindFirstChild("Humanoid") then
+                        LP.Character.Humanoid:UnequipTools()
+                    end
+                    task.delay(2.5, function()
+                        IsWaitingSus = false
+                    end)
+                end
+            end
+
+            if hp >= 7000 and getgenv().Retreating then getgenv().Retreating = false end
+
+            if hp > 0 and hp < 4000 and not getgenv().Retreating then
+                getgenv().Retreating = true
+                local eName = getgenv().LastTargetName
+                if eName then
+                    getgenv().RetreatTracker[eName] = (getgenv().RetreatTracker[eName] or 0) + 1
+                    if getgenv().RetreatTracker[eName] >= 3 then
+                        Blacklist[eName] = tick()
+                        local bGuy = S.P:FindFirstChild(eName)
+                        if bGuy and bGuy.Character and bGuy.Character:FindFirstChild("HumanoidRootPart") then
+                            pcall(function() bGuy.Character.HumanoidRootPart.CFrame = cf_new(0, 50000, 0) end)
+                        end
+                        getgenv().LockedTarget = nil
+                        return
+                    end
+                end
+            end
+
+            if t and t:FindFirstChild("HumanoidRootPart") and t:FindFirstChild("Humanoid") and t.Humanoid.Health > 0 and LP.Character and LP.Character:FindFirstChild("HumanoidRootPart") then
+                if Blacklist[t.Name] and tick() - Blacklist[t.Name] < 300 then
+                    getgenv().LockedTarget = nil
+                    return
+                end
+
+                local d = (LP.Character.HumanoidRootPart.Position - t.HumanoidRootPart.Position).Magnitude
+                getgenv().LockedTarget = (d <= 300 and not getgenv().Retreating) and t or nil
+                
+                if getgenv().LockedTarget then
+                    local hum = t.Humanoid
+                    if not trackedHums[hum] then
+                        trackedHums[hum] = true
+                        hum.Died:Connect(function()
+                            TotalKills = TotalKills + 1
+                            SaveKills(TotalKills)
+                            pcall(function() KillsLabel.Text = "⚔️ KILLS: " .. tostring(TotalKills) end)
+                        end)
+                    end
+                end
+
+                if getgenv().LockedTarget == t then
+                    tmr[t.Name] = (tmr[t.Name] or 0) + dt
+                    if getgenv().Setting and getgenv().Setting.Hitbox and getgenv().Setting.Hitbox.Enabled then
+                        local sz = getgenv().Setting.Hitbox.Size or 200
+                        if t.HumanoidRootPart.Size.X ~= sz then
+                            t.HumanoidRootPart.Size = v3_new(sz, sz, sz)
+                            t.HumanoidRootPart.Transparency = getgenv().Setting.Hitbox.Transparency or 0.7
+                            t.HumanoidRootPart.CanCollide = false
+                        end
+                    end
+                    
+                    if tmr[t.Name] >= 25 then
+                        Blacklist[t.Name] = tick()
+                        pcall(function() t.HumanoidRootPart.CFrame = cf_new(0, 50000, 0) end)
+                        getgenv().LockedTarget, tmr[t.Name] = nil, nil
+                    end
+                elseif not getgenv().Retreating then
+                    tmr[t.Name] = 0
+                end
+            else
+                getgenv().LockedTarget = nil
+            end
+        end)
+        
+        pcall(function()
+            if getgenv().LockedTarget and LP.Character and LP.Character:FindFirstChild("Humanoid") and LP.Character.Humanoid.Health > 0 then
+                if not IsWaitingSus then
+                    local eT = SmartEquipFruit()
+                    if eT and eT.Parent ~= LP.Character then LP.Character.Humanoid:EquipTool(eT) end
+                end
+            end
+        end)
+    end
+end)
+
+local RS = game:GetService("RunService")
+local VIM = game:GetService("VirtualInputManager")
+local VU = game:GetService("VirtualUser")
+local BaseSpeed = (game.PlaceId == 4442272000 or game.PlaceId == 7449423635) and 350 or 300
+
+_G.AttackNoAnimation = true
+
+local function GetCurrentBlade()
+    local pcallSuccess, CombatFramework = pcall(require, LP.PlayerScripts:FindFirstChild("CombatFramework"))
+    if pcallSuccess and CombatFramework then
+        return CombatFramework.activeController
+    end
+    return nil
+end
+
+local RigEvent
+pcall(function()
+    RigEvent = game:GetService("ReplicatedStorage"):WaitForChild("RigControllerEvent", 1)
+end)
+
+RS.Stepped:Connect(function()
+    pcall(function()
+        if LP.Character then
+            for _, v in pairs(LP.Character:GetDescendants()) do
+                if v:IsA("BasePart") then
+                    v.CanCollide = false
+                end
+            end
+        end
+
+        if getgenv().LockedTarget and LP.Character and LP.Character:FindFirstChild("Humanoid") then
+            local animator = LP.Character.Humanoid:FindFirstChildOfClass("Animator")
+            if animator then
+                for _, track in pairs(animator:GetPlayingAnimationTracks()) do
+                    track:Stop()
+                end
+            end
+            
+            if _G.AttackNoAnimation then
+                local blade = GetCurrentBlade()
+                if blade and blade.equipped then
+                    if blade.animator and blade.animator.ani then
+                        blade.animator.ani:Stop()
+                    end
+                    blade.timeToNextAttack = 0
+                    blade.hitboxMagnitude = 250
+                    blade.active = false
+                    blade.blocking = false
+                    blade.focusStart = 0
+                    blade.isAttacking = false
+                    blade.attacksTicks = 0
+                    blade.hitboxHits = {}
+                    blade:attack()
+                end
+            end
+        end
+    end)
+end)
+
+task.spawn(function()
+    RS.Heartbeat:Connect(function()
+        if _G.AttackNoAnimation and getgenv().LockedTarget then
+            pcall(function()
+                local tHrp = getgenv().LockedTarget:FindFirstChild("HumanoidRootPart")
+                local hrp = LP.Character and LP.Character:FindFirstChild("HumanoidRootPart")
+                
+                if tHrp and hrp then
+                    local weapon = GetCurrentBlade()
+                    local wName = weapon and weapon.currentWeaponModel and weapon.currentWeaponModel.Name or ""
+                    
+                    local isBeast = wName:find("Kitsune") or wName:find("Leopard") or wName:find("T-Rex") or wName:find("Mammoth")
+                    
+                    local attackRange = isBeast and 35 or 45
+                    local hitSize = isBeast and 80 or 100
+                    
+                    hrp.CFrame = CFrame.lookAt(hrp.Position, Vector3.new(tHrp.Position.X, hrp.Position.Y, tHrp.Position.Z))
+                    
+                    if (tHrp.Position - hrp.Position).Magnitude <= attackRange then
+                        VU:CaptureController()
+                        VU:ClickButton1(Vector2.new(850, 500))
+                        
+                        if weapon and weapon.equipped and weapon.currentWeaponModel and RigEvent then
+                            RigEvent:FireServer("hit", hitSize, weapon.currentWeaponModel, tHrp.CFrame)
+                        end
+                    end
+                end
+            end)
+        end
+    end)
+end)
+
+local lastRandTick, rX, rY, rZ = 0, 0, 5, 5
+local bv = Instance.new("BodyVelocity")
+bv.MaxForce = Vector3.new(math.huge, math.huge, math.huge)
+bv.Velocity = Vector3.new(0, 0, 0)
+
+RS.Heartbeat:Connect(function()
+    pcall(function()
+        local t = getgenv().LockedTarget
+        if t and t:FindFirstChild("HumanoidRootPart") and LP.Character and LP.Character:FindFirstChild("HumanoidRootPart") then
+            local hrp = LP.Character.HumanoidRootPart
+            local tHrp = t.HumanoidRootPart
+            
+            if not hrp:FindFirstChild("BodyVelocity") then
+                local newBv = bv:Clone()
+                newBv.Parent = hrp
+            end
+
+            local d = (hrp.Position - tHrp.Position).Magnitude
+            local targetVelocity = tHrp.Velocity
+            local predictedPos = tHrp.Position + (targetVelocity * 0.1)
+
+            if d > 150 then
+                hrp.CFrame = CFrame.new(hrp.Position, predictedPos)
+                hrp.CFrame = hrp.CFrame + hrp.CFrame.LookVector * (BaseSpeed / 10)
+            else
+                local offsetDistance = 10
+                local tool = LP.Character:FindFirstChildOfClass("Tool")
+                if tool then
+                    if tool.Name:find("Kitsune") or tool.Name:find("Leopard") or tool.Name:find("T-Rex") or tool.Name:find("Mammoth") then 
+                        offsetDistance = 15
+                    end
+                end
+                
+                local offset = tHrp.CFrame.LookVector * -offsetDistance
+                local targetPos = predictedPos + offset
+                hrp.CFrame = CFrame.new(Vector3.new(targetPos.X, predictedPos.Y, targetPos.Z), predictedPos)
+                
+                hrp.AssemblyLinearVelocity = Vector3.new(0, 0, 0)
+                hrp.AssemblyAngularVelocity = Vector3.new(0, 0, 0)
+                tHrp.AssemblyLinearVelocity = Vector3.new(0, 0, 0)
+            end
+        else
+            if LP.Character and LP.Character:FindFirstChild("HumanoidRootPart") then
+                local currentHrp = LP.Character.HumanoidRootPart
+                if not currentHrp:FindFirstChild("BodyVelocity") then
+                    local newBv = bv:Clone()
+                    newBv.Velocity = Vector3.new(0, 0, 0)
+                    newBv.Parent = currentHrp
+                else
+                    currentHrp.BodyVelocity.Velocity = Vector3.new(0, 0, 0)
+                end
+            end
+        end
+    end)
+end)
+
+local function preventSitting(character)
+    local humanoid = character:WaitForChild("Humanoid", 5)
+    if humanoid then
+        humanoid:SetStateEnabled(Enum.HumanoidStateType.Seated, false)
+    end
+end
+
+if LP.Character then
+    preventSitting(LP.Character)
+end
+
+LP.CharacterAdded:Connect(preventSitting)
+
+for _, v in pairs(S.W:GetDescendants()) do
+    if v:IsA("Seat") or v:IsA("VehicleSeat") then
+        v.Disabled = true
+    end
+end
+
+S.W.DescendantAdded:Connect(function(v)
+    if v:IsA("Seat") or v:IsA("VehicleSeat") then
+        v.Disabled = true
+    end
+end)
